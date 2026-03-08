@@ -330,6 +330,18 @@ export default function App() {
           </text>
         </svg>
       </section>
+
+      <footer className="footer-credit">
+        Interactive visualization by{' '}
+        <a
+          href="https://www.jarellanobover.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Jaime Arellano-Bover’s website in a new tab"
+        >
+          Jaime Arellano-Bover
+        </a>
+      </footer>
     </div>
   );
 }
