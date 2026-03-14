@@ -51,6 +51,27 @@ h2 {
   font-size: 0.95rem;
 }
 
+.yale-logo {
+  height: 86px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.description {
+  margin: 0 0 12px;
+  color: #1f2937;
+  line-height: 1.45;
+}
+
+.description p {
+  margin: 0 0 10px;
+}
+
+.description p:last-child {
+  margin-bottom: 0;
+}
+
 .controls {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -227,6 +248,14 @@ button:hover {
 @media (max-width: 640px) {
   .app {
     padding: 12px;
+  }
+
+  .app-header {
+    align-items: center;
+  }
+
+  .yale-logo {
+    height: 64px;
   }
 
   .footer-credit {
