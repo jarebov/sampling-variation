@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 type Speed = 'slow' | 'medium' | 'fast';
+type MathInlineProps = {
+  tex: string;
+};
 
 const SUPPORT = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const MU = 1.4;
@@ -15,6 +20,20 @@ const SPEED_MS: Record<Speed, number> = {
 
 const P_LOW = [0, 0.6, 0.4, 0, 0, 0, 0, 0];
 const P_HIGH = [0.8, 0, 0, 0, 0, 0, 0, 0.2];
+
+function MathInline({ tex }: MathInlineProps) {
+  return (
+    <span
+      className="math-inline"
+      dangerouslySetInnerHTML={{
+        __html: katex.renderToString(tex, {
+          displayMode: false,
+          throwOnError: false,
+        }),
+      }}
+    />
+  );
+}
 
 function meanFromPmf(probabilities: number[]): number {
   let expected = 0;
@@ -213,15 +232,16 @@ export default function App() {
         </p>
 
         <p>
-          Consider the population of Yale students. Let X denote the number of siblings of a randomly selected
-          student. The population mean is μ = 1.4 (that is, E[X] = μ = 1.4). This value is fixed and does not
-          change. The slider below allows you to change the value of the population variance Var(X)= σ². Once you
-          select a value of σ², it is fixed and does not change.
+          Consider the population of Yale students. Let <MathInline tex={'X'} /> denote the number of siblings of a randomly selected
+          student. The population mean is <MathInline tex={'\\mu = 1.4'} /> (that is,{' '}
+          <MathInline tex={'E[X] = \\mu = 1.4'} />). This value is fixed and does not change. The slider below allows
+          you to change the value of the population variance <MathInline tex={'\\operatorname{Var}(X) = \\sigma^2'} />.
+          Once you select a value of <MathInline tex={'\\sigma^2'} />, it is fixed and does not change.
         </p>
 
         <p>
-          Panel A shows the population distribution of X, represented by the gray circles. The red vertical line
-          marks the true population mean μ.
+          Panel A shows the population distribution of <MathInline tex={'X'} />, represented by the gray circles. The
+          orange vertical line marks the true population mean <MathInline tex={'\\mu'} />.
         </p>
 
         <p>
@@ -231,8 +251,8 @@ export default function App() {
 
         <p>
           Because the sample changes from one repetition to the next, the sample mean also changes. Panel C records
-          the sample mean from each repetition. As more repetitions accumulate, the distribution of the sample mean
-          gradually emerges.
+          the sample mean <MathInline tex={'\\bar X'} /> from each repetition. As more repetitions accumulate, the
+          distribution of the sample mean gradually emerges.
         </p>
 
         <p>
@@ -243,7 +263,7 @@ export default function App() {
 
       <section className="controls">
         <label>
-          Population variance σ²
+          Population variance <MathInline tex={'\\sigma^2'} />
           <input
             type="range"
             min={0}
@@ -253,12 +273,12 @@ export default function App() {
             onChange={(event) => setLambda(Number(event.target.value))}
           />
           <span className="control-readout">
-            σ²=Var(X) = {varX.toFixed(3)}
+            <MathInline tex={'\\sigma^2 = \\operatorname{Var}(X)'} /> = {varX.toFixed(3)}
           </span>
         </label>
 
         <label>
-          Sample size N
+          Sample size <MathInline tex={'N'} />
           <input
             type="range"
             min={2}
@@ -267,7 +287,9 @@ export default function App() {
             value={sampleSize}
             onChange={(event) => setSampleSize(Number(event.target.value))}
           />
-          <span className="control-readout">N = {sampleSize}</span>
+          <span className="control-readout">
+            <MathInline tex={'N'} /> = {sampleSize}
+          </span>
         </label>
 
         <label>
@@ -303,7 +325,7 @@ export default function App() {
             Pause
           </button>
           <button type="button" onClick={runOneSample} disabled={repetitionCount >= targetRepetitions}>
-            Step
+            Draw
           </button>
           <button
             type="button"
@@ -319,16 +341,25 @@ export default function App() {
       </section>
 
       <section className="stats">
-        <div>μ = {MU.toFixed(1)}</div>
-        <div>Population size = {NPOP.toLocaleString()}</div>
-        <div>Var(X) = {varX.toFixed(3)}</div>
-        <div>Var(X̄) = σ²/N = {varXBar.toFixed(4)}</div>
-        <div>SE(X̄) = √(σ²/N) = {seXBar.toFixed(4)}</div>
+        <div>
+          <MathInline tex={'\\mu'} /> = {MU.toFixed(1)}
+        </div>
+        <div>
+          <MathInline tex={'\\operatorname{Var}(X)'} /> = {varX.toFixed(3)}
+        </div>
+        <div>
+          <MathInline tex={'\\operatorname{Var}(\\bar X) = \\sigma^2/N'} /> = {varXBar.toFixed(4)}
+        </div>
+        <div>
+          <MathInline tex={'\\operatorname{SE}(\\bar X) = \\sqrt{\\sigma^2/N}'} /> = {seXBar.toFixed(4)}
+        </div>
         <div>Repetitions = {repetitionCount}/{targetRepetitions}</div>
       </section>
 
       <section className="panel">
-        <h2>Panel A: Population Distribution of X (Number of Siblings)</h2>
+        <h2>
+          Panel A: Population Distribution of <MathInline tex={'X'} /> (Number of Siblings)
+        </h2>
         <svg viewBox="0 0 660 220" className="svg-chart" role="img">
           <line x1={axis.left} x2={axis.right} y1={panelABottom} y2={panelABottom} className="axis" />
           {SUPPORT.map((x) => {
@@ -374,19 +405,22 @@ export default function App() {
             μ = {MU}
           </text>
           <text x={40} y={206} className="hint">
-            Gray dots: population of N = 10,000 (subset shown inside bars)
+            Gray dots: population preview (subset shown inside bars)
           </text>
         </svg>
       </section>
 
       <section className="panel">
-        <h2>Panel B: Current Sample (size N = {sampleSize})</h2>
+        <h2>
+          Panel B: Current Sample (size <MathInline tex={'N'} /> = {sampleSize})
+        </h2>
         <div className="panel-subtitle">
           <div>
-            Sample mean: X̄ = {currentMean === null ? '—' : currentMean.toFixed(3)}
+            Sample mean: <MathInline tex={'\\bar X'} /> = {currentMean === null ? '—' : currentMean.toFixed(3)}
           </div>
           <div>
-            Sample variance: s² = {currentSampleVariance === null ? '—' : currentSampleVariance.toFixed(3)}
+            Sample variance: <MathInline tex={'s^2'} /> ={' '}
+            {currentSampleVariance === null ? '—' : currentSampleVariance.toFixed(3)}
           </div>
         </div>
         <svg viewBox="0 0 660 190" className="svg-chart" role="img">
@@ -412,7 +446,9 @@ export default function App() {
       </section>
 
       <section className="panel">
-        <h2>Panel C: Sampling Distribution of X̄</h2>
+        <h2>
+          Panel C: Sampling Distribution of <MathInline tex={'\\bar X'} />
+        </h2>
         <div className="panel-subtitle">
           Stored sample means: {means.length}
         </div>

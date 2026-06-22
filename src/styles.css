@@ -94,6 +94,14 @@ input[type='range'] {
   width: 100%;
 }
 
+.math-inline {
+  white-space: nowrap;
+}
+
+.math-inline .katex {
+  font-size: 1em;
+}
+
 .control-readout {
   color: #334155;
   font-size: 0.9rem;
@@ -201,41 +209,41 @@ button:hover {
 }
 
 .sample-dot {
-  fill: #2563eb;
+  fill: #0072b2;
   opacity: 0.9;
 }
 
 .hist-bar {
-  fill: #93c5fd;
-  stroke: #60a5fa;
+  fill: rgba(0, 114, 178, 0.22);
+  stroke: #0072b2;
   stroke-width: 0.4;
 }
 
 .mu-line {
-  stroke: #dc2626;
+  stroke: #d55e00;
   stroke-width: 2;
 }
 
 .mu-line-faint {
-  stroke: #ef4444;
+  stroke: #d55e00;
   stroke-width: 1.2;
   stroke-dasharray: 4 4;
   opacity: 0.7;
 }
 
 .xbar-line {
-  stroke: #2563eb;
+  stroke: #0072b2;
   stroke-width: 2;
 }
 
 .mu-text {
-  fill: #b91c1c;
+  fill: #d55e00;
   font-size: 12px;
   font-weight: 600;
 }
 
 .xbar-text {
-  fill: #1d4ed8;
+  fill: #0072b2;
   font-size: 12px;
   font-weight: 600;
 }
