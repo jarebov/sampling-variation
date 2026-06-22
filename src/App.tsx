@@ -243,7 +243,7 @@ export default function App() {
 
       <section className="controls">
         <label>
-          Population variance
+          Population variance σ²
           <input
             type="range"
             min={0}
@@ -253,7 +253,7 @@ export default function App() {
             onChange={(event) => setLambda(Number(event.target.value))}
           />
           <span className="control-readout">
-            Var(X) = {varX.toFixed(3)}
+            σ²=Var(X) = {varX.toFixed(3)}
           </span>
         </label>
 
@@ -322,8 +322,8 @@ export default function App() {
         <div>μ = {MU.toFixed(1)}</div>
         <div>Population size = {NPOP.toLocaleString()}</div>
         <div>Var(X) = {varX.toFixed(3)}</div>
-        <div>Var(X̄) = Var(X)/N = {varXBar.toFixed(4)}</div>
-        <div>SE(X̄) = √(Var(X)/N) = {seXBar.toFixed(4)}</div>
+        <div>Var(X̄) = σ²/N = {varXBar.toFixed(4)}</div>
+        <div>SE(X̄) = √(σ²/N) = {seXBar.toFixed(4)}</div>
         <div>Repetitions = {repetitionCount}/{targetRepetitions}</div>
       </section>
 
@@ -414,7 +414,7 @@ export default function App() {
       <section className="panel">
         <h2>Panel C: Sampling Distribution of X̄</h2>
         <div className="panel-subtitle">
-          Stored sample means: {means.length} (target {targetRepetitions}, max {MAX_STORED_MEANS})
+          Stored sample means: {means.length}
         </div>
         <svg viewBox="0 0 660 240" className="svg-chart" role="img">
           <line x1={axis.left} x2={axis.right} y1={histBottom} y2={histBottom} className="axis" />
